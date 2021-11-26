@@ -30,13 +30,8 @@ public class TodoController {
         throw new RuntimeException("No existe el id.");
     }
 
-    @GetMapping(value = "api/{id}/todo")
-    public Todo get(Long id) throws Exception {
-        return service.get(id);
-    }
-
     @DeleteMapping(value = "api/{id}/todo")
-    public void delete(@PathParam("id") Long id) throws Exception {
+    public void delete(@PathVariable("id") Long id) throws Exception {
         service.delete(id);
     }
 }
