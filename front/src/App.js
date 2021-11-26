@@ -9,10 +9,12 @@ const Store = createContext(initialState);
 
 const Form = () => {
 
+  //Hooks
   const formRef = useRef(null);
   const { dispatch, state: { item } } = useContext(Store);
   const [state, setState] = useState(item);
 
+  //Función para agregar un dato
   const onAdd = (event) => {
     event.preventDefault();
 
@@ -37,6 +39,7 @@ const Form = () => {
       })
   }
 
+  //Función para editar un dato
   const onEdit = (event) => {
     event.preventDefault();
 
@@ -61,6 +64,7 @@ const Form = () => {
       })
   }
 
+  //Formulario para recibir los datos, sirve para agregar y actualizar
   return (
     <form ref={formRef}>
       <input
@@ -83,6 +87,7 @@ const Form = () => {
 const List = () => {
   const { dispatch, state } = useContext(Store);
 
+  //Se usa el Hook Effect para mostrar todos los datos
   useEffect(() => {
     fetch(HOST_API + "/todos")
       .then(response => response.json())
@@ -91,6 +96,7 @@ const List = () => {
       })
   }, [state.list.length, dispatch])
 
+  //Función para eliminar un dato
   const onDelete = (id) => {
     fetch(HOST_API + "/" +id+ "/todo", {
       method: "DELETE"
@@ -100,10 +106,12 @@ const List = () => {
     })
   };
 
+  //Función para mostrar los datos en el formulario que serán editados
   const onEdit = (todo) => {
     dispatch({ type: "edit-item", item: todo })
   };
 
+  //Estructura para mostrar los datos
   return (
     <div>
       <table>
@@ -134,6 +142,7 @@ const List = () => {
   );
 }
 
+//Función para recorrer el array dependiendo de la acción para realizar (Agregar, Actualizar, Eliminar)
 function reducer(state, action) {
   switch (action.type) {
     case 'update-item':
@@ -162,6 +171,7 @@ function reducer(state, action) {
   }
 }
 
+//Componente para evitar el uso de props, para usar los datos más globales
 const StoreProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -175,6 +185,7 @@ const StoreProvider = ({ children }) => {
   );
 }
 
+//Función principal que llama cada componente para visualizarlo en la página
 function App() {
   return (
     <StoreProvider>

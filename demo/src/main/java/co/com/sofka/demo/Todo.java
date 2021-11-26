@@ -7,13 +7,14 @@ import javax.persistence.Id;
 @Entity
 public class Todo {
 
+    //Parametros
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private boolean isCompleted;
 
-
+    //Getters and Setters
     public Long getId() {
         return id;
     }
